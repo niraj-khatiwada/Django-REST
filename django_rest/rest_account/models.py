@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 class AccountManager(BaseUserManager):
@@ -21,15 +21,17 @@ class AccountManager(BaseUserManager):
         user = self.create_user(
             email = email,
             username = username,
+            password = password
         )
         user.is_staff = True
         user.save(using = self._db)
         return user
     
-    def create_superuser(self, email, username, password = None):
+    def create_superuser(self, email, username,password = None):
         user = self.create_user(
             email = email,
             username = username,
+            password= password
         )
         user.is_staff = True
         user.is_admin = True
@@ -40,13 +42,13 @@ class AccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
     email = models.EmailField(max_length = 30, unique =True, verbose_name = "Email")
-    username = models.CharField(max_length = 50)
+    username = models.CharField(max_length = 50, unique= True)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default= False)
     is_admin = models.BooleanField(default=False)
-    
-    last_login = models.DateTimeField(auto_now= True )
+
+    last_login = models.DateTimeField(auto_now= True)
     joined_date = models.DateTimeField(auto_now_add= True)
 
     def __str__(self):

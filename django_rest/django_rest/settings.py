@@ -123,5 +123,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #Custom User Model
-
 AUTH_USER_MODEL = 'rest_account.Account'

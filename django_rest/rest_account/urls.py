@@ -7,6 +7,7 @@ from rest_framework import  routers
 router = routers.DefaultRouter()
 router.register('hello-viewset', views.HelloViewSet, basename='hello-viewset')
 router.register('profile-viewset', views.ProfileViewSet)
+router.register('login', views.LoginViewset, basename= 'login')
 
 
 urlpatterns = [
