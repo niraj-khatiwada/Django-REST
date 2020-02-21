@@ -49,7 +49,9 @@ class Account(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
 
     last_login = models.DateTimeField(auto_now= True)
+
     joined_date = models.DateTimeField(auto_now_add= True)
+
 
     def __str__(self):
         return self.email
@@ -67,5 +69,17 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-    
+
+
+class ProfileFeed(models.Model):
+    feed_user = models.ForeignKey(Account, on_delete= models.CASCADE)
+    feed_text = models.CharField(max_length=255)
+    created_on = models.DateTimeField(auto_now_add= True)
+
+    def __str__(self):
+        return self.feed_text
+
+    class Meta:
+        db_table = 'Profile Feed'
+
     

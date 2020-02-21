@@ -10,7 +10,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 
 from . import serializers
-from .models import Account
+from .models import Account, ProfileFeed
 
 from. import permission
 
@@ -100,3 +100,13 @@ class LoginViewset(viewsets.ViewSet):
 
     def create(self, request):
         return ObtainAuthToken().post(request)
+
+class ProfileFeedViewsets(viewsets.ModelViewSet):
+    serializer_class = serializers.ProfileFeedSerializer
+    queryset = ProfileFeed.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permission.UpdateOwnStatus,)
+
+    def perform_create(self, serializer):
+        serializer.save(feed_user = self.request.user)
+
