@@ -47,7 +47,7 @@ class AccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser):
     email =         models.EmailField(max_length=255, unique=True, verbose_name='Email')
-    username =      models.CharField(max_length = 50, unique = True)
+    username =      models.CharField(max_length = 50)
     is_active =     models.BooleanField(default=True, verbose_name='Active')
     is_staff =      models.BooleanField(default=False, verbose_name='Staff')
     is_admin =      models.BooleanField(default=False, verbose_name='Admin')
@@ -70,3 +70,14 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+class ProfileFeed(models.Model):
+    feed_user = models.ForeignKey(Account, on_delete= models.CASCADE)
+    feed_text = models.CharField(max_length=255)
+    created_on = models.DateTimeField(auto_now_add= True)
+
+    class Meta:
+        db_table = 'Feed Details'
+
+    def __str__(self):
+        return self.feed_text
