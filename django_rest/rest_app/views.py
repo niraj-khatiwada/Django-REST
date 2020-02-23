@@ -53,3 +53,26 @@ class HelloWorldViewset(viewsets.ViewSet):
         ]
 
         return Response({'message': 'Hello World API Vieset', 'api': api_viewset})
+
+    def create(self, request):
+        serializer = serializers.HelloWorldSerializer(data = request.data)
+
+        if serializer.is_valid():
+            name = serializer.data.get('name')
+            return Response({'messgae': f"Hello {name}"})
+        else:
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk =None):
+        return Response({'message': 'HTTP method GET'})
+
+    def update(self, request, pk = None):
+        return Response({'message': 'HTTP method PUT'})
+
+    def partial_update(self, request, pk = None):
+        return Response({'message': 'HTTP method patch'})
+
+    def destroy(self, request, pk= None):
+        return Response({'message': 'HTTP method delete'})
+
+
