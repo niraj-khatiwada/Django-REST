@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/xenial64"
+  config.vm.box = "ubuntu/bionic64"
 
   config.vm.network "forwarded_port", host_ip: "127.0.0.1", guest: 8000, host: 8000
 
@@ -22,10 +22,9 @@ Vagrant.configure("2") do |config|
     sudo apt-get -y upgrade
     # Set Ubuntu Language
     sudo locale-gen en_GB.UTF-8
-    # Install Python, SQLite and pip and Django
+    # Install Python, SQLite and pip
     sudo apt-get install -y python3-dev sqlite python-pip
-    sudo apt-get install python3-pip
-    python3 -m pip install Django
+		
     # Upgrade pip to the latest version.
     sudo pip install --upgrade pip
     # Install and configure python virtualenvwrapper.
