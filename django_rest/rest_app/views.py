@@ -1,3 +1,55 @@
 from django.shortcuts import render
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import viewsets
+from . import serializers
 # Create your views here.
+
+class HelloWorldAPIView(APIView):
+    serializer_class = serializers.HelloWorldSerializer
+
+    def get(self, request):
+
+        hello_world_api_view = [
+            "Gives you full control over application logic",
+            "Perfect for dealing with complex logic",
+            "While working with local files",
+            "Calling other API's or services",
+            "Each API view is manually mapped to URL"
+        ]
+        return Response({'message':'Message from API view', 'helloworldapiview': hello_world_api_view})
+
+    def post(self, request):
+
+        serializer = serializers.HelloWorldSerializer(data= request.data)
+        if serializer.is_valid():
+            name = serializer.data.get('name')
+            return Response({'message': f"Hello {name}"})
+        else:
+            return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, pk=None):
+        return Response({'message':'Put HTTP method'})
+
+    def patch(self, request, pk= None):
+        return Response({'message': 'Patch HTTP method'})
+
+    def delete(self, request, pk=None):
+        return Response({'message': 'Delete HTTP method'})
+
+class HelloWorldViewset(viewsets.ViewSet):
+    serializer_class = serializers.HelloWorldSerializer
+
+    def list(self, request):
+
+        api_viewset= [
+            'For simple CRUD operation on database',
+            'API requires simple to no customization as well',
+            'Want quick and simple API',
+            'Your API is working with statndard data structures',
+            'Automatically maps to URL using routers'
+        ]
+
+        return Response({'message': 'Hello World API Vieset', 'api': api_viewset})
