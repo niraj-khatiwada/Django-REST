@@ -5,6 +5,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register('hello-world-api-viewset', views.HelloWorldViewset, basename = 'helloworld_apiviewset')
+router.register('profile', views.ProfileViewset)
 
 from . import views
 

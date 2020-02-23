@@ -4,7 +4,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework import filters
+
+from .permissions import UpdateOwnProfileOnly
 from . import serializers
+
+
+from .models import Account
 # Create your views here.
 
 class HelloWorldAPIView(APIView):
@@ -76,3 +82,9 @@ class HelloWorldViewset(viewsets.ViewSet):
         return Response({'message': 'HTTP method delete'})
 
 
+class ProfileViewset(viewsets.ModelViewSet):
+    serializer_class = serializers.ProfileSerializer
+    queryset = Account.objects.all()
+    permission_classes = (UpdateOwnProfileOnly,)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('username', 'email',)
